@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>永遠闇市 ＜製品版＞ 議論シート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DotGothic16&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#d8d2c6; --dim:#9a948a; --bg0:#0a0d12; --bg1:#10151d;
+    --blue:#7fd6e8; --orange:#f4a02a; --line:#2a313c; --panel:#141a23; --panel2:#0d1219;
+    --gold:#e8c272; --good:#7fe0a0; --bad:#e07f7f;
+  }
+  *{box-sizing:border-box}
+  html{scroll-padding-top:190px}
+  html,body{margin:0;padding:0}
+  body{
+    min-height:100vh; color:var(--ink); letter-spacing:.02em; line-height:1.85;
+    font-family:'Hiragino Kaku Gothic ProN','Yu Gothic',Meiryo,sans-serif; font-size:15px;
+    background:
+      radial-gradient(900px 600px at 12% 6%, rgba(127,214,232,.10), transparent 60%),
+      radial-gradient(820px 620px at 88% 96%, rgba(244,160,42,.10), transparent 60%),
+      linear-gradient(160deg,var(--bg1),var(--bg0));
+    background-attachment:fixed;
+  }
+  .pix{font-family:'DotGothic16','Hiragino Kaku Gothic ProN',monospace}
+  .wrap{max-width:1000px; margin:0 auto; padding:28px 22px 100px}
+
+  .brand{color:var(--dim); font-size:12px; letter-spacing:.28em}
+  h1{font-size:30px; letter-spacing:.08em; margin:8px 0 4px; text-shadow:0 0 20px rgba(244,160,42,.32)}
+  .lead{color:var(--dim); font-size:13px; margin:0 0 18px}
+
+  .intro{background:var(--panel); border:2px solid var(--line); border-radius:10px; padding:18px 22px; margin:0 0 22px; font-size:14px}
+  .intro b{color:var(--gold); font-weight:normal}
+  .intro .o{color:var(--orange)} .intro .step{color:var(--blue)}
+  .intro ul{margin:10px 0 0; padding-left:20px} .intro li{margin:5px 0}
+
+  /* sticky 操作バー＋タブ */
+  .bar{position:sticky; top:0; z-index:10; padding:12px 0 6px;
+    background:linear-gradient(180deg, rgba(10,13,18,.96), rgba(10,13,18,.82)); backdrop-filter:blur(3px);
+    border-bottom:1px solid var(--line); margin-bottom:18px}
+  .bar .row1{display:flex; flex-wrap:wrap; align-items:center; gap:12px; margin-bottom:10px}
+  .prog{font-size:12.5px; color:var(--dim)}
+  .prog b{color:var(--gold); font-weight:normal; font-size:14px}
+  .pbar{height:8px; width:200px; background:var(--panel2); border:1px solid var(--line); border-radius:99px; overflow:hidden; margin-top:4px}
+  .pbar > i{display:block; height:100%; width:0%; background:linear-gradient(90deg,var(--blue),var(--orange))}
+  .grow{flex:1 1 auto}
+  button{font:inherit; cursor:pointer}
+  .btn{border:2px solid var(--line); background:var(--panel2); color:var(--ink); padding:8px 14px; border-radius:8px}
+  .btn:hover{border-color:var(--orange)}
+  .btn.go{background:#3a2a10; border-color:#6b4d18; color:#ffd9a0; text-shadow:0 0 10px rgba(244,160,42,.4)}
+  .tabs{display:flex; flex-wrap:wrap; gap:8px}
+  .tab{border:2px solid var(--line); background:var(--panel2); color:var(--ink); padding:7px 14px; border-radius:9px; font-size:13.5px}
+  .tab .n{color:var(--dim); font-size:11.5px; margin-left:6px}
+  .tab:hover{border-color:#4a5666}
+  .tab.on{border-color:var(--orange); color:#ffe6bf; box-shadow:0 0 14px rgba(244,160,42,.18); background:linear-gradient(180deg,#1c1a16,#141a23)}
+  .tab.done{border-color:#3c5a44}
+  .tab.done .n{color:var(--good)}
+
+  .sectitle{font-size:18px; letter-spacing:.04em; margin:6px 0 4px; padding:6px 14px;
+    border-left:6px solid var(--orange); background:linear-gradient(90deg, rgba(244,160,42,.12), transparent 72%)}
+  .sechint{color:var(--dim); font-size:12.5px; margin:0 0 14px; padding-left:6px}
+
+  .card{background:var(--panel); border:2px solid var(--line); border-radius:11px; padding:20px 22px; margin:16px 0;
+    box-shadow:0 4px 14px rgba(0,0,0,.35); scroll-margin-top:150px}
+  .card.is-gate{border-color:#5a4a2a; box-shadow:0 0 0 1px rgba(244,160,42,.10), 0 4px 14px rgba(0,0,0,.4)}
+  .card.s-決{border-left:6px solid var(--good)}
+  .card.s-暫{border-left:6px solid var(--gold)}
+  .chead{display:flex; flex-wrap:wrap; align-items:baseline; gap:9px; margin-bottom:4px}
+  .cid{color:var(--dim); font-size:13px}
+  .ctitle{font-size:16.5px; color:#efe7d6}
+  .pill{font-size:11px; border-radius:99px; padding:1px 10px; border:1.5px solid var(--line); background:var(--panel2); color:var(--dim); white-space:nowrap}
+  .pill.gate{border-color:var(--orange); color:#ffd9a0; background:#241a0c; box-shadow:0 0 10px rgba(244,160,42,.18)}
+  .pill.mode{border-color:#2f4a55; color:#bfe6f0; background:#0e1a1f}
+  .q{font-size:15.5px; margin:12px 0 4px; color:#e7ddc9}
+  .why{color:var(--dim); font-size:13px; margin:0 0 14px}
+
+  .opts{display:flex; flex-direction:column; gap:8px; margin:8px 0 4px}
+  .opt{display:flex; gap:11px; align-items:flex-start; padding:11px 14px; border:1.5px solid var(--line);
+    border-radius:9px; background:var(--panel2); cursor:pointer; transition:border-color .12s}
+  .opt:hover{border-color:#4a5666}
+  .opt.on{border-color:var(--orange); background:#1b1812; box-shadow:0 0 12px rgba(244,160,42,.12)}
+  .opt input{margin-top:5px; accent-color:#f4a02a}
+  .opt .rk{flex:0 0 auto; width:26px; height:26px; border-radius:50%; border:1.5px solid var(--line);
+    display:flex; align-items:center; justify-content:center; font-size:13px; color:var(--dim); background:#0a0e13}
+  .opt.on .rk{border-color:var(--orange); color:#3a2a08; background:#e8c272; box-shadow:0 0 10px rgba(232,194,114,.4)}
+  .opt .txt{flex:1}
+
+  .rec{background:linear-gradient(90deg, rgba(232,194,114,.10), transparent 80%); border:1px solid #3a3424;
+    border-radius:9px; padding:11px 14px; margin:14px 0 6px; font-size:13.5px}
+  .rec b{color:var(--gold); font-weight:normal}
+
+  .foot{display:flex; flex-wrap:wrap; gap:14px; align-items:center; margin-top:14px}
+  .status{display:flex; gap:7px}
+  .status .s{border:1.5px solid var(--line); background:var(--panel2); color:var(--ink); padding:5px 12px; border-radius:8px; font-size:13px}
+  .status .s.on[data-s="決"]{background:#143524; border-color:var(--good); color:#bff0d2}
+  .status .s.on[data-s="暫"]{background:#332a10; border-color:var(--gold); color:#ffe6bf}
+  .status .s.on[data-s="未"]{background:#241c1c; border-color:#5a4a4a; color:#e6c8c8}
+  textarea{width:100%; min-height:60px; margin-top:12px; font:inherit; color:var(--ink); padding:11px 13px;
+    border:1.5px solid var(--line); border-radius:9px; background:#0a0e13; resize:vertical; line-height:1.7}
+  textarea:focus{outline:none; border-color:var(--blue)}
+  textarea::placeholder{color:#5f6670}
+
+  .hide{display:none !important}
+  .saved{font-size:12px; color:var(--good); opacity:0; transition:opacity .3s}
+  .src{font-size:11.5px; color:var(--dim); border-top:1px solid var(--line); margin-top:46px; padding-top:14px; line-height:1.9}
+
+  .modal{position:fixed; inset:0; background:rgba(5,7,11,.7); display:none; align-items:center; justify-content:center; padding:18px; z-index:50}
+  .modal.show{display:flex}
+  .modal .box{background:var(--panel); border:2px solid var(--line); border-radius:12px; max-width:780px; width:100%; max-height:88vh; display:flex; flex-direction:column; padding:20px}
+  .modal h3{margin:0 0 8px; color:var(--gold); font-weight:normal}
+  .modal p{margin:0 0 10px; color:var(--dim); font-size:13px}
+  .modal textarea{flex:1; min-height:340px; font-family:ui-monospace,Menlo,Consolas,monospace; font-size:12.5px; background:#0a0e13}
+  .modal .acts{display:flex; gap:9px; justify-content:flex-end; margin-top:12px}
+  @media(max-width:600px){ .pbar{width:130px} .wrap{padding:20px 14px 90px} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="brand pix">EVER MARKET — 製品版 議論シート</div>
+  <h1 class="pix">永遠闇市 ＜製品版＞</h1>
+  <p class="lead">試作で固まったルールはそのまま。ここでは「製品としてどう作って届けるか」を、暗黙の了解ゼロで1問ずつ決めて記録します。</p>
+
+  <div class="intro">
+    使い方：各カードで <b>選択肢を選ぶ</b> → <b>状態（❓未決 / 🟨暫定 / ✅決定）</b>を押す → <b>決定・理由</b>を書く。
+    入力はこのブラウザに自動保存され、閉じても続きから再開できます。終わったら <span class="o">📋 書き出し</span> でMarkdownに変換し、製品の決定台帳（decision-log.md）へ貼り付けて確定にします。
+    <ul>
+      <li><span class="o">⭐</span> がついた項目は「先に決めたい重要な分かれ道」。まずそこから埋めると、残りが一気に絞り込めます。</li>
+      <li><b>優先順位</b>の項目は、<b>クリックした順に番号</b>がつきます（もう一度クリックで解除）。<b>複数選択可</b>の項目は、あてはまるものをいくつでも選べます。</li>
+      <li>正解を今すぐ出す必要はありません。「🟨暫定」で進め、議論で固まったら「✅決定」に上げてください。</li>
+    </ul>
+  </div>
+
+  <div class="bar">
+    <div class="row1">
+      <div class="prog">
+        <span id="pct" class="pix"><b>0</b> / 0 決定</span>
+        <div class="pbar"><i id="pfill"></i></div>
+      </div>
+      <span class="saved" id="saved">✔ 自動保存しました</span>
+      <span class="grow"></span>
+      <button class="btn go pix" id="export">📋 書き出し</button>
+      <button class="btn" id="clear" title="入力を全消去">🗑</button>
+    </div>
+    <div class="tabs pix" id="tabs"></div>
+  </div>
+
+  <div id="panels"></div>
+
+  <div class="src">
+    このシートは“議論と入力の道具”です。確定した答えの正本は <b>docs/product/decision-log.md</b>（Markdown）に積みます。<br>
+    関連：凍結した試作版 = タグ <b>prototype-v1</b> ／ ルールの正本 = everMarket_prot/docs/prototype/
+  </div>
+</div>
+
+<div class="modal" id="modal">
+  <div class="box">
+    <h3 class="pix">書き出し（Markdown）</h3>
+    <p>下のテキストをコピーして、decision-log.md などに貼り付けてください。</p>
+    <textarea id="md" readonly></textarea>
+    <div class="acts">
+      <button class="btn go" id="copyMd">コピー</button>
+      <button class="btn" id="dlMd">ファイル保存</button>
+      <button class="btn" id="closeModal">閉じる</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* mode: 既定=single（ひとつ選ぶ）/ "multi"=複数選択可 / "rank"=クリック順に優先順位 */
+const GROUPS = [
+ { key:"S1", tab:"① 事業・プロダクト", title:"① 事業・プロダクト", hint:"何を・誰に・どこで・どう届けるか。最初に決まらないと全部が動かせない層。", items:[
+   {id:"A1",gate:1,title:"形（デジタル/実物）",q:"最初に出す形は？",why:"形が変わると、作る物・関わる人・かかるお金・売り場が全部入れ替わる。最上流の分岐。",opts:["デジタル先行（試作の延長）","実物ボードゲーム先行","両方同時","デジタルで反応を見て実物化"],rec:"デジタル先行（試作資産が活きる）。実物は将来の公式候補として明記。"},
+   {id:"A2",mode:"rank",title:"対応端末（優先順位）",q:"どの機械で遊べるようにする？ 候補をクリック順に優先順位づけ。",why:"操作（マウス/指）・画面・売り場・審査が変わる。試作は横長・マウス前提。",opts:["PC（Web/Steam）","タブレット","スマホ","家庭用ゲーム機（Switch等）"],rec:"PCを第一・タブレットを第二。スマホ縦は情報量と相性が悪く後回し。"},
+   {id:"A3",mode:"rank",title:"売り場・販路（優先順位）",q:"どこで売る／配る？ 候補をクリック順に優先順位づけ。",why:"審査・手数料・必須表記・必要な登録が場所ごとに違う。価格と利益と時期の前提。",opts:["Steam","App Store / Google Play","自前Web / itch.io","実物流通（通販/専門店）"],rec:"Steam中心。まず自前Web/itchで反応を見て有料化、も有効。"},
+   {id:"B1",gate:1,title:"お金の取り方（事業モデル）",q:"どうやってお金にする？",why:"課金/アカウント/サーバーを作るか否か＝製品の中身と必要技術を直接決める。",opts:["買い切り","基本無料＋課金","サブスク","物理販売","まず無料公開"],rec:"v1.0は買い切り or 無料公開（重い運営を避け小規模と相性◎）。"},
+   {id:"B2",gate:1,title:"対象層・地域・言語",q:"誰に・どの地域/言語で出す？",why:"難度・説明・価格・宣伝先・翻訳の有無が決まる。後付け多言語は割高。",opts:["国内・日本語のみ","国内優先＋多言語化の土台だけ用意","最初から日英2言語"],rec:"国内・日本語。ただし文章を1か所に集め、後で翻訳できる作りに。"},
+   {id:"B3",gate:1,title:"対象年齢・表現の上限",q:"ダークな世界観をどこまで尖らせる？対象年齢は？",why:"審査区分・売り場・対象人口・本番アートの作り直しに直結。アート本制作前が決めどき。",opts:["全年齢/ティーン狙い（表現を抑える）","年齢制限を許容（尖らせる）","販路確認後に上限を決める"],rec:"販路（A3）の規約確認後に表現の上限を文書化→それからアート本制作。"},
+   {id:"B4",mode:"multi",title:"成功の定義",q:"何をもって成功とする？（測れる目標／複数選択可）",why:"ゴールの数字が無いと、どこまでお金と時間をかけるか・続けるか畳むかを判断できない。",opts:["商業目標（販売数/黒字）","非商業（完成・評価・仲間集め）","コミュニティ規模","賞・メディア掲載","段階目標（まず完成→評判→収益）"],rec:"段階目標を軸に、各段に1つ測れる物差し（発売日/レビュー/販売数 等）。"},
+   {id:"B5",title:"競合と一番の売り",q:"似た作品の中で『これだから選ばれる』一番の売りは？（一文で）",why:"言葉にできないと宣伝も作り込みの優先順位もつかない。",opts:["判定で揉めない競りの読み合い","闇市・欲望の世界観","対面の手触り","上記を一文に凝縮"],rec:"独自メカ（8軸絶対判定×陳列の競り）＋世界観を一文に凝縮。"},
+   {id:"C1",gate:1,title:"製品版v1.0の範囲",q:"どこまで入れば完成・発売してよい？（試作スコープ外の取捨）",why:"完成の線引きが無いと永遠に未完成。各担当の『どこまでで終わりか』が共有できない。",opts:["最小（2人+AI+確定ルール+本番アート+最小の音）","標準（+物語/世界観モード+デッキ構築UI）","拡張（+オンライン or 4人戦）","段階リリース"],rec:"最小構成v1.0＋残りは段階リリースで明確に後送り。"},
+   {id:"D1",title:"オンライン要素を入れるか",q:"対戦同期・アカウント・ランキングを入れる？",why:"毎月の維持費・不正対策・個人情報・法務が一式発生。後付けが一番高くつく。",opts:["入れない（1台+AI）","非同期対戦のみ","本格オンライン+ランキング","v1.0は無し→v2.0"],rec:"v1.0はオフライン確定。オンラインはv2.0候補と明言（暗黙の期待を作らない）。"},
+ ]},
+ { key:"S2", tab:"② 体制・お金・権利", title:"② 体制・お金・権利", hint:"並行開発の土台。人が増える前に紙にしておくほど、後で揉めない。", items:[
+   {id:"E1",gate:1,title:"体制・予算・期限・外注枠",q:"誰が・週何時間・いくらまで・外注できる枠は？",why:"使える手とお金が分からなければ規模も日程も机上の空論になる。",opts:["全員兼業・無予算","兼業＋小予算（一部外注）","一部専業＋予算","クラファンで先に資金"],rec:"まず正直な棚卸し。アート/音/翻訳の3つだけは早めに自前/外注を決める。"},
+   {id:"E2",gate:1,title:"権利の帰属",q:"絵・文・コードの権利は誰のもの？外注成果の買い取りは？固有名詞の商標は？",why:"『誰の作品か』『抜けた人の貢献』で後から必ず揉める。お金の話より先に紙で。",opts:["原作者（あなた）に集約","貢献に応じ共同","外注は譲渡契約を明記","未定（要相談）"],rec:"人が増える前に書面化。固有名詞の商標確保も検討。"},
+   {id:"E3",title:"参加・離脱・分配の合意",q:"各メンバーは有償/無償？分配は？途中離脱の手順は？",why:"権利と並んで小チームが壊れる二大原因。",opts:["無償・善意ベース","売上分配あり","役割契約で明文化","未定"],rec:"離脱手順と『抜けた人の貢献を使い続けてよいか』まで先に紙に。"},
+   {id:"E4",mode:"multi",title:"中止・撤退の条件",q:"どうなったら止める？（複数選択可）",why:"完成基準と対をなす『やめどき』。無いと“なんとなく空中分解”する。",opts:["金額の上限で区切る","期間で区切る","中心メンバー離脱で見直し","区切らない（非推奨）"],rec:"撤退ラインと、その時の成果物・データ・お金の分け方を先に。"},
+   {id:"E5",title:"最終決裁・デッドロック解消",q:"役をまたいで割れた時、最後は誰が決める？不在時の代理は？",why:"最も暗黙になりがちな『最後は誰が決めるか』。無いと議論が永遠に止まる。",opts:["オーナー（あなた）が最終決裁","多数決","進行役が裁定","未定"],rec:"オーナー最終決裁＋代理を1人。決められない時の打ち手も決める。"},
+   {id:"E6",title:"役割分担と決定権",q:"企画/プログラム/アート/音/QA/進行役の決定権を誰が持つ？",why:"『チーム決定』の中身（誰が最終OKを出すか）が今は空白。",opts:["6役に専任を1人ずつ","当面2極（企画=あなた / 実装=Claude+承認）","全決定をあなたに集約","分野別＋またぎは進行役"],rec:"当面2極で始め、担当合流時に移譲条件つきで割る。"},
+ ]},
+ { key:"S3", tab:"③ 技術の土台", title:"③ 技術の土台", hint:"後で変えると作り直し。デバイスの結論が技術を連鎖的に決める。", items:[
+   {id:"F1",gate:1,title:"土台技術",q:"今のWeb版を育てる？専用ソフトに乗り換える？",why:"既存の判定エンジン（19項目テスト付）を活かせるかの分水嶺。全技術判断の親。",opts:["今のWeb（HTML/JS）を発展","Unity（全機種・学習コスト）","Godot（無料・据置機は別対応）","物理＋簡易Web補助"],rec:"Switchも狙うならUnity候補／当面Web・スマホで十分なら今のWeb発展が最速。"},
+   {id:"F2",title:"判定エンジンの扱い",q:"確定ルールの判定エンジンを再利用？翻訳移植？作り直し？",why:"純粋関数で綺麗に書かれた資産。安易に捨てると確定ルールを再バグ化する。",opts:["そのまま再利用（土台がWeb）","翻訳移植＋テスト移植（別ソフト）","ゼロから書き直し（非推奨）"],rec:"別ソフトなら翻訳移植＋『19項目テスト全通過』を移植完了の合格条件に。"},
+   {id:"F3",title:"データの持ち方",q:"客/遺物/主人公の大量データをどう持つ？",why:"件数が増え多言語が入ると1ファイル手書きは破綻しやすい。",opts:["今の手書き継続","表計算→自動変換","専用の管理画面","既製サービス"],rec:"当面は手書き、件数増で表計算→自動変換へ。データの形（列の意味）は今固定。"},
+   {id:"F4",title:"多言語の作り",q:"後から翻訳できる作りにする？",why:"後付けの多言語化は一番やり直しになりやすい作業。",opts:["日本語のみ","設計だけ多言語対応","最初から複数言語"],rec:"翻訳は後でよいが『文章を1か所に逃がす』作りだけは最初から。"},
+   {id:"F5",title:"ビルド・配布・審査の責任者",q:"作って配って直す流れと、ストアに出す責任者は？",why:"複数人開発で最も漏れる『誰が最終的に出すか』。審査の所要日数も読む。",opts:["手動配布＋Gitで履歴","自動ビルド/配布（CI/CD）","審査・配布の責任者を1人決める"],rec:"まず責任者を1人決める。技術面は当面手動＋Gitで十分。"},
+   {id:"F6",title:"対応OS・画面の下限",q:"どこまで古い/小さい端末で動けば合格？",why:"合格ラインが無いと開発者ごとに想定がバラけ、ある端末で崩れる。",opts:["主要な現行機種のみ","数年前の普及機まで","PC優先・スマホは簡易"],rec:"端末方針（A2）確定後に、最低OS版・最小画面幅を数字で明文化。"},
+   {id:"F7",title:"自動テストの発展",q:"セルフテスト19項目を製品でどう発展させる？",why:"複数人開発で確定ルールがこっそり壊れる（デグレ）を防ぐ最強の盾。",opts:["移植して項目拡充（手動）","変更ごと自動実行（CI）","自動テスト無し（非推奨）"],rec:"まず移植・拡充→変更が頻繁になったら自動実行へ格上げ。"},
+ ]},
+ { key:"S4", tab:"④ コンテンツ・世界観", title:"④ コンテンツ・世界観", hint:"ルール以外の中身。作る量が読みにくいので“終わり”を先に決める。", items:[
+   {id:"G1",title:"物語パートの扱い",q:"物語を製品でどう見せる？",why:"対戦だけ作る人と物語を期待する人で完成形が割れる。物量・人材・日程を左右。",opts:["対戦特化＋世界観の断片","ストーリーモード併設","フルノベル＋対戦","まず対戦→後付け"],rec:"v1.0は対戦特化＋断片。ストーリーは“箱だけ”用意して次版送り。"},
+   {id:"G2",gate:1,title:"世界観バイブルと決定者",q:"設定の正本を1冊化する？最終決定者は誰？",why:"散在資料を各自解釈→矛盾した設定が量産される。最も暗黙化しやすい所。",opts:["バイブル新設＋ロア統括1名","specに世界観章を増設","overviewを暫定正本","各担当が個別管理（非推奨）"],rec:"world-bible.mdに1本化、決定者は原作者（あなた）。まず用語集から。"},
+   {id:"G3",title:"アートのスタイルガイドと描き手",q:"本番ドット絵を誰が・どんな絵柄で描く？",why:"見本を決めず複数人で描くとタッチがバラけ、全点描き直し（最大の物量事故）。",opts:["内製","外注","AI生成＋人仕上げ","当面は仮絵を磨き段階差し替え"],rec:"まずスタイルガイド確定→主役級（客12/遺物14）から差し替え。"},
+   {id:"G4",title:"サウンドの有無",q:"BGM・効果音を入れる？どの規模？",why:"無いと未完成に見え、入れると制作一式（作曲/SE/権利/無音設定）が増える。",opts:["フル（BGM+SE+環境音）","最小（操作音+BGM1〜2曲）","ロイヤリティフリー素材","v1.0は無音→後で追加"],rec:"最小構成で入れる。素材は権利確認、無音でも遊べる配慮も同時に。"},
+   {id:"G5",title:"v1.0のコンテンツ本数",q:"主人公/遺物/客プールを何種で出す？追加計画は？",why:"重い暗黙仮定（12人全部完璧）で進むと終盤に間に合わず削る羽目に。",opts:["フル盛り（12/14/客30/ピン40）","主役を絞る","ルール全実装・アートは段階","コア＋シーズン制"],rec:"ルールは12/14を全実装、本番アート・物語の肉付けは主役優先。"},
+   {id:"G6",mode:"multi",title:"素材の権利台帳",q:"フォント・音・絵・AI生成物の商用可否をどう管理？（複数選択可）",why:"作る前に決めれば無料、後で気づくと作り直し＋法的リスク（配信停止も）。",opts:["商用OK明記のものに統一＋台帳","フォント/音は安全側に","外注は著作権譲渡を契約","AI生成は規約確認済みのみ"],rec:"1枚の権利台帳で出所と可否を管理。フォントは配布形態確定時に再確認。"},
+   {id:"G7",mode:"multi",title:"チュートリアル・アクセシビリティ",q:"初見の導入と配慮（色覚/文字/無音）をどこまで？（複数選択可）",why:"8軸判定は初見が難しく、序盤で離脱しやすい。定着率＝売上に直結。",opts:["試作のを磨く程度","手を動かす練習試合を新設","色以外でも分かる表示","文字サイズ/無音プレイ"],rec:"最初の1試合をガイド付きに＋色依存しない/演出抑制/無音の3点を最低ラインに。"},
+ ]},
+ { key:"S5", tab:"⑤ 完成・品質・運用", title:"⑤ 完成・品質・運用", hint:"出す前に“出した後”まで。完成の定義が最大の暗黙の空白。", items:[
+   {id:"H1",gate:1,title:"完成の定義（出荷チェックリスト）",q:"『出荷してよい』の合格基準を一覧化する？",why:"無いと各人が別々のゴールを描き、合流で必ず揉める。製品化で最大の暗黙。",opts:["出荷チェックリスト1枚","β完成と正式版完成の2段階","明文化せず『良さそうなら出す』（非推奨）"],rec:"β完成と正式版完成の2枚を『測れる文』で作り正本に追加。"},
+   {id:"H2",title:"QA体制・βテスト",q:"製品の品質を誰がどうやって確かめる？",why:"『誰かがやる』の暗黙でテスト不在のまま出荷→リリース直後に炎上。",opts:["軽量（開発者+知人β）","標準（+複数端末+公募β+報告窓口）","本格（専任QA/外部+自動化）"],rec:"標準を基準に。端末確定後すぐ『端末別チェックリスト』。報告は1フォームに集約。"},
+   {id:"H3",title:"動作保証リスト・審査要件",q:"どの端末で必ず動くと約束する？各ストアの審査要件は？",why:"保証範囲が無いと苦情対応に追われ、完成後に審査落ちで作り直し。",opts:["広く保証（PC全+スマホ+タブレット）","絞って保証","1プラットフォーム先行"],rec:"最初は絞って保証。販路の審査要件（年齢区分/プライバシー等）を最序盤に一覧化しH1へ。"},
+   {id:"H4",mode:"multi",title:"初見の体験品質基準",q:"楽しさ・分かりやすさをどう測る？（複数選択可）",why:"『面白いはず』の暗黙のまま、初見離脱が製品で初めて露見する。",opts:["数値（完走率/離脱箇所）","観察（βで詰まりを直接見る）","感想（満足度アンケート）"],rec:"観察を主に。『初見が説明書なしで1試合完走』を合格行に入れる。"},
+   {id:"H5",title:"リリース後の運用・保守・問い合わせ",q:"不具合対応・更新（パッチ）・問い合わせを誰がどこまで？",why:"最初の不具合連絡で対応不能になり信用を失う。半年後の保守者が直せる体制を。",opts:["最小（窓口1+重大バグのみ）","標準（窓口+既知不具合+定期更新+版管理）","手厚い（+告知+ロールバック手順）"],rec:"標準。版番号・更新履歴・窓口1本＋保守者向け引き継ぎ書を用意。"},
+   {id:"H6",title:"個人情報・法務",q:"規約・プライバシー方針・特商法表記・返金方針を誰が用意？",why:"オンライン/課金を入れた瞬間に必須。ストア審査でも必ず要求される実務要件。",opts:["オフライン買い切りで最小限","必要な表記一式を用意","専門家に相談"],rec:"事業モデル/オンライン要否（B1/D1）確定後すぐ、必要表記を洗い出す。"},
+   {id:"H7",mode:"multi",title:"データのバックアップ・喪失対策",q:"コード・絵の元データ・音・設定をどこに何重に保存？（複数選択可）",why:"1人のPCにしか無い元データは小チームで頻発し、復旧不能になる。",opts:["共有Git","クラウド保管庫","定期バックアップ運用","鍵（アカウント）の持ち主を決める"],rec:"全資産を共有の保管庫に多重保存。鍵の持ち主も決める。"},
+   {id:"H8",title:"アカウントの鍵・引き継ぎ",q:"ストア/Git/支払い/ドメインを誰の名義で、倒れたら誰が継ぐ？",why:"個人開発で最も詰まる急所（連絡不能で更新も売上回収も不能になる）。",opts:["オーナー名義＋緊急時の共有","共同管理","代理人を決める"],rec:"1人にしか分からない『鍵』をゼロに。引き継ぎ手順を文書化。"},
+   {id:"H9",mode:"multi",title:"コミュニティ・炎上対応",q:"感想/苦情をどこで受け、批判に誰が前に立つ？（複数選択可）",why:"ダークな世界観が公開後に批判された時の窓口・判断者が未定。",opts:["公式窓口＋担当1名","SNS発信ルールを定める","当面は最小対応"],rec:"窓口と判断者を先に決め、SNSで何を言ってよいかのルールも。"},
+ ]},
+ { key:"S6", tab:"⑥ 記録・並行作業", title:"⑥ 記録・並行作業の仕組み", hint:"暗黙ゼロの土台。複数人＋複数Claudeが衝突せず進むための取り決め。", items:[
+   {id:"J1",title:"製品正本の構造・更新責任",q:"製品の正本をどう持ち、誰が更新する？",why:"決定の置き場が無いとチャット/頭の中で散る＝依頼の核心。【この器を今構築中】",opts:["親(product)/子(game-part)に分け台帳一元化","1文書=1オーナー＋提案制","現状分散のまま（非推奨）"],rec:"親子に分け、1文書1オーナー。製品の決定はdecision-log 1か所に積む。"},
+   {id:"J2",title:"Git共有・ブランチ運用",q:"共有Gitに移行し『1作業=1ブランチ=1PR』にする？",why:"今はPC内のみ・zip手渡しで、最新がどれか管理できず上書き事故が起きる。",opts:["非公開リポジトリ＋PR運用","共有はするが全員main直接","現状維持（非推奨）"],rec:"非公開リポジトリ＋『1作業=1ブランチ=1PR』を標準に。"},
+   {id:"J3",title:"1人1領域・index.html分割",q:"巨大1ファイルを分割してから並行作業を解禁する？",why:"約1900行の1ファイル（画面/処理/装飾が同居）を同時編集すると必ず衝突。",opts:["先に分割（エンジン/画面/データ/装飾）","当面は同時1人ロック","分けない（非推奨）"],rec:"分割を1回やり切る。済むまでは『本体は同時に1人だけ』。"},
+   {id:"J4",title:"Claude複数走行の住み分け",q:"複数のClaudeをどう住み分ける？",why:"同じファイルを別々に上書きする事故が、人同士より速く大量に起きる。",opts:["1Claude=1ブランチ=1領域を厳守","領域は分けるが同ファイル可（非推奨）","当面1つだけ"],rec:"1Claude=1ブランチ=1領域。終わったら必ずPRで人の承認待ち。"},
+   {id:"J5",title:"AIへの指示テンプレ",q:"Claudeへの依頼に決まったひな形を必須化する？",why:"曖昧だとスコープ外を触る/完了条件が無く中途半端で止まる。",opts:["テンプレ必須（目的/完了条件/対象/参照/禁止）","完了条件だけ必須","都度自由（現状）"],rec:"テンプレ必須＋作業ログをPR説明に残す。"},
+   {id:"J6",title:"レビューと『決定ログ無しPRは不可』",q:"本線に入れる前のレビューと、決定の記録を強制する？",why:"口頭/チャット決定の記録漏れを止める一番強い仕掛け。",opts:["全PR人の承認＋一次チェックは別Claude","ルール変更のみレビュー","省略（非推奨）"],rec:"最終承認は必ず人。『決定ログ追記の無いPRは承認しない』を関所に。"},
+   {id:"J7",title:"AI成果物の検収責任",q:"AIの出力を誰が人として最終確認・責任を負う？機密を渡す範囲は？",why:"無検収のままコードや正本に混ざるリスク。複数Claude並行では特に高い。",opts:["決定権者が検収","領域オーナーが検収","二段（別Claude→人）"],rec:"領域オーナーが人として検収。外部AIに渡してよい機密の線引きも。"},
+ ]},
+];
+
+const KEY="evm_product_discussion_v2";
+let state={};
+try{ state=JSON.parse(localStorage.getItem(KEY)||"{}"); }catch(e){ state={}; }
+const modeOf=id=>{ for(const g of GROUPS){ const it=g.items.find(x=>x.id===id); if(it) return it.mode||"single"; } return "single"; };
+function get(id){
+  const m=modeOf(id);
+  const def={ status:"未", note:"", sel: m==="single"? -1 : [] };
+  const s=state[id]||{};
+  return { status:s.status||"未", note:s.note||"", sel:(s.sel!==undefined? s.sel : def.sel) };
+}
+let saveTimer=null;
+function save(){
+  try{ localStorage.setItem(KEY,JSON.stringify(state)); }catch(e){ /* file:// やプライベートモードでも処理を止めない */ }
+  const el=document.getElementById("saved"); if(el){ el.style.opacity="1";
+    clearTimeout(saveTimer); saveTimer=setTimeout(()=>el.style.opacity="0",1100); }
+  updateProgress();
+}
+function escapeHtml(t){ return (t||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+
+const tabsEl=document.getElementById("tabs");
+const panelsEl=document.getElementById("panels");
+let active=0;
+
+GROUPS.forEach((g,gi)=>{
+  const t=document.createElement("button");
+  t.className="tab"+(gi===0?" on":""); t.dataset.gi=gi;
+  t.innerHTML=g.tab+' <span class="n" id="tn'+gi+'"></span>';
+  t.addEventListener("click",()=>setTab(gi));
+  tabsEl.appendChild(t);
+
+  const p=document.createElement("div"); p.className="panel-grp"+(gi===0?"":" hide"); p.dataset.gi=gi;
+  p.innerHTML='<div class="sectitle pix">'+g.title+'</div><div class="sechint">'+g.hint+'</div>';
+  g.items.forEach(it=>p.appendChild(renderCard(it)));
+  panelsEl.appendChild(p);
+});
+
+function setTab(gi){
+  active=gi;
+  document.querySelectorAll(".tab").forEach(t=>t.classList.toggle("on",+t.dataset.gi===gi));
+  document.querySelectorAll(".panel-grp").forEach(p=>p.classList.toggle("hide",+p.dataset.gi!==gi));
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function renderCard(it){
+  const card=document.createElement("div"); card.dataset.id=it.id;
+  drawCard(card,it);
+  return card;
+}
+function drawCard(card,it){
+  const m=it.mode||"single"; const st=get(it.id);
+  card.className="card"+(it.gate?" is-gate":"")+" s-"+st.status;
+  const gate=it.gate?'<span class="pill gate">⭐ 先に決めたい</span>':'';
+  const modePill = m==="rank"?'<span class="pill mode">優先順位（クリック順）</span>'
+                 : m==="multi"?'<span class="pill mode">複数選択可</span>':'';
+  let optsHtml="";
+  it.opts.forEach((o,i)=>{
+    if(m==="rank"){
+      const pos=Array.isArray(st.sel)?st.sel.indexOf(i):-1;
+      optsHtml+='<div class="opt rankopt'+(pos>=0?" on":"")+'" data-i="'+i+'"><span class="rk">'+(pos>=0?(pos+1):"")+'</span><span class="txt">'+o+'</span></div>';
+    }else if(m==="multi"){
+      const on=Array.isArray(st.sel)&&st.sel.indexOf(i)>=0;
+      optsHtml+='<label class="opt'+(on?" on":"")+'"><input type="checkbox" value="'+i+'"'+(on?" checked":"")+'><span class="txt">'+o+'</span></label>';
+    }else{
+      const on=st.sel===i;
+      optsHtml+='<label class="opt'+(on?" on":"")+'"><input type="radio" name="r_'+it.id+'" value="'+i+'"'+(on?" checked":"")+'><span class="txt">'+o+'</span></label>';
+    }
+  });
+  card.innerHTML=
+    '<div class="chead"><span class="cid pix">'+it.id+'</span><span class="ctitle pix">'+it.title+'</span>'+gate+modePill+'</div>'+
+    '<div class="q">'+it.q+'</div>'+
+    '<div class="why">なぜ先に決める：'+it.why+'</div>'+
+    '<div class="opts">'+optsHtml+'</div>'+
+    '<div class="rec"><b>推奨：</b>'+it.rec+'</div>'+
+    '<div class="foot"><div class="status pix">'+
+      '<button class="s" data-s="未"'+(st.status==="未"?' class="on"':'')+'>❓ 未決</button>'+
+      '<button class="s" data-s="暫"'+(st.status==="暫"?' class="on"':'')+'>🟨 暫定</button>'+
+      '<button class="s" data-s="決"'+(st.status==="決"?' class="on"':'')+'>✅ 決定</button>'+
+    '</div></div>'+
+    '<textarea placeholder="あなたの決定・理由（メモでOK。あとで書き出して decision-log へ）">'+escapeHtml(st.note)+'</textarea>';
+
+  // 状態の見た目を反映
+  card.querySelectorAll(".status .s").forEach(b=>{
+    b.classList.toggle("on", b.dataset.s===st.status);
+    b.addEventListener("click",()=>{
+      const s=get(it.id); s.status=b.dataset.s; state[it.id]=s; save();
+      card.classList.remove("s-未","s-暫","s-決"); card.classList.add("s-"+s.status);
+      card.querySelectorAll(".status .s").forEach(x=>x.classList.toggle("on",x.dataset.s===s.status));
+    });
+  });
+  // 選択肢
+  if(m==="rank"){
+    card.querySelectorAll(".rankopt").forEach(el=>{
+      el.addEventListener("click",()=>{
+        const s=get(it.id); if(!Array.isArray(s.sel)) s.sel=[];
+        const i=+el.dataset.i; const at=s.sel.indexOf(i);
+        if(at>=0) s.sel.splice(at,1); else s.sel.push(i);
+        state[it.id]=s; drawCard(card,it); save();
+      });
+    });
+  }else if(m==="multi"){
+    card.querySelectorAll('input[type=checkbox]').forEach(c=>{
+      c.addEventListener("change",()=>{
+        const s=get(it.id); if(!Array.isArray(s.sel)) s.sel=[];
+        const i=+c.value; const at=s.sel.indexOf(i);
+        if(c.checked && at<0) s.sel.push(i); else if(!c.checked && at>=0) s.sel.splice(at,1);
+        state[it.id]=s; save(); c.closest(".opt").classList.toggle("on",c.checked);
+      });
+    });
+  }else{
+    card.querySelectorAll('input[type=radio]').forEach(r=>{
+      r.addEventListener("change",()=>{
+        const s=get(it.id); s.sel=+r.value; state[it.id]=s; save();
+        card.querySelectorAll(".opt").forEach(o=>o.classList.remove("on"));
+        r.closest(".opt").classList.add("on");
+      });
+    });
+  }
+  card.querySelector("textarea").addEventListener("input",e=>{ const s=get(it.id); s.note=e.target.value; state[it.id]=s; save(); });
+}
+
+function selText(it){
+  const m=it.mode||"single"; const s=get(it.id);
+  if(m==="rank") return (Array.isArray(s.sel)&&s.sel.length)? s.sel.map((i,n)=>(n+1)+"位:"+it.opts[i]).join(" ／ ") : "（未選択）";
+  if(m==="multi") return (Array.isArray(s.sel)&&s.sel.length)? s.sel.map(i=>it.opts[i]).join(" ／ ") : "（未選択）";
+  return (s.sel>=0)? it.opts[s.sel] : "（未選択）";
+}
+
+function updateProgress(){
+  let total=0,done=0;
+  GROUPS.forEach((g,gi)=>{
+    let gt=0,gd=0;
+    g.items.forEach(it=>{ total++; gt++; if(get(it.id).status==="決"){done++; gd++;} });
+    const tn=document.getElementById("tn"+gi); if(tn) tn.textContent="("+gd+"/"+gt+")";
+    const tab=document.querySelector('.tab[data-gi="'+gi+'"]'); if(tab) tab.classList.toggle("done",gd===gt);
+  });
+  document.getElementById("pct").innerHTML="<b>"+done+"</b> / "+total+" 決定";
+  document.getElementById("pfill").style.width=(total?Math.round(done/total*100):0)+"%";
+}
+
+document.getElementById("export").addEventListener("click",()=>{
+  const n=new Date();
+  const stamp=n.getFullYear()+"-"+String(n.getMonth()+1).padStart(2,"0")+"-"+String(n.getDate()).padStart(2,"0");
+  let total=0,done=0; GROUPS.forEach(g=>g.items.forEach(it=>{total++; if(get(it.id).status==="決")done++;}));
+  let md="# 永遠闇市 製品版 議論シート 書き出し（"+stamp+"）\n\n進捗："+done+" / "+total+" 決定\n";
+  const mk={"未":"❓未決","暫":"🟨暫定","決":"✅決定"};
+  GROUPS.forEach(g=>{
+    md+="\n## "+g.title+"\n";
+    g.items.forEach(it=>{
+      const s=get(it.id);
+      md+="\n### ["+mk[s.status]+"] "+it.id+" "+it.title+(it.gate?"　⭐先に決めたい":"")+"\n";
+      md+="- 問い："+it.q+"\n";
+      md+="- 選択："+selText(it)+"\n";
+      md+="- 決定・理由："+(s.note? s.note.replace(/\n/g,"\n  ") : "（未記入）")+"\n";
+    });
+  });
+  document.getElementById("md").value=md;
+  document.getElementById("modal").classList.add("show");
+});
+document.getElementById("closeModal").addEventListener("click",()=>document.getElementById("modal").classList.remove("show"));
+document.getElementById("copyMd").addEventListener("click",()=>{
+  const ta=document.getElementById("md"); ta.select();
+  const b=document.getElementById("copyMd");
+  (navigator.clipboard?navigator.clipboard.writeText(ta.value):Promise.reject())
+    .then(()=>{b.textContent="コピーしました";setTimeout(()=>b.textContent="コピー",1400);})
+    .catch(()=>{try{document.execCommand("copy");b.textContent="コピーしました";setTimeout(()=>b.textContent="コピー",1400);}catch(e){}});
+});
+document.getElementById("dlMd").addEventListener("click",()=>{
+  const blob=new Blob([document.getElementById("md").value],{type:"text/markdown"});
+  const a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download="discussion-export.md"; a.click();
+});
+document.getElementById("clear").addEventListener("click",()=>{
+  if(confirm("入力をすべて消去します。よろしいですか？（先に「書き出し」で控えを取っておくと安全です）")){
+    state={}; localStorage.removeItem(KEY); location.reload();
+  }
+});
+
+updateProgress();
+</script>
+</body>
+</html>
